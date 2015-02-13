@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fee_pay/version'
 
 Gem::Specification.new do |spec|
   spec.name           = "fee_pay"
-  spec.version        = FeePay::VERSION
+  spec.version        = "0.0.1"
   spec.authors        = ["Arux Software"]
   spec.email          = ["sheuer@aruxsoftware.com"]
   spec.summary        = "Ruby gem for interacting with the FeePay API."
