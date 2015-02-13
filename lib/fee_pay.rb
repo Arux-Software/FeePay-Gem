@@ -11,6 +11,6 @@ require "fee_pay/api/account"
 require "fee_pay/api/cart"
 
 module FeePay
-  VERSION = "0.0.1"
+  VERSION = "0.0.2"
   USER_AGENT = "FeePay GEM #{VERSION}"
 end
