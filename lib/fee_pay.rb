@@ -1,5 +1,16 @@
-require "fee_pay/version"
+require 'rubygems'
+require 'httpi'
+require 'json'
+
+require "fee_pay/api"
+
+require "fee_pay/api/bank_info"
+require "fee_pay/api/config"
+require "fee_pay/api/auth"
+require "fee_pay/api/account"
+require "fee_pay/api/cart"
 
 module FeePay
-  # Your code goes here...
+  VERSION = "0.0.1"
+  USER_AGENT = "FeePay GEM #{VERSION}"
 end
