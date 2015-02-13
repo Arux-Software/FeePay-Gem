@@ -1,8 +1,14 @@
 module FeePay
   module API
     class Account
-      SERVER_URI = "https://accounts.feepay.switchboard.io"
-      
+      def self.server_uri
+        if FeePay::API.testmode
+          "https://accounts.pre.feepay.switchboard.io"
+        else
+          "https://accounts.feepay.switchboard.io"
+        end
+      end
+
       attr_accessor :auth
       
       def initialize(options = {})
@@ -13,7 +19,7 @@ module FeePay
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/api/users/#{uuid}"
+        request.url = "#{self.class.server_uri}/api/users/#{uuid}"
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -27,7 +33,7 @@ module FeePay
       
       def create(params)
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/api/users/"
+        request.url = "#{self.class.server_uri}/api/users/"
         request.body = params
         request.headers = self.generate_headers
 
@@ -44,7 +50,7 @@ module FeePay
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/api/users/#{uuid}"
+        request.url = "#{self.class.server_uri}/api/users/#{uuid}"
         request.body = params
         request.headers = self.generate_headers
 
@@ -61,7 +67,7 @@ module FeePay
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/api/users/#{uuid}"
+        request.url = "#{self.class.server_uri}/api/users/#{uuid}"
         request.headers = self.generate_headers
         
         response = HTTPI.delete(request)

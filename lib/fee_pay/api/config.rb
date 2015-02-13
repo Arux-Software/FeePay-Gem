@@ -1,11 +1,17 @@
 module FeePay
   module API
     class Config
-      SERVER_URI = "https://config.feepay.switchboard.io"
-    
+      def self.server_uri
+        if FeePay::API.testmode
+          "https://config.pre.feepay.switchboard.io"
+        else
+          "https://config.feepay.switchboard.io"
+        end
+      end
+          
       def districts
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/districts"
+        request.url = "#{self.class.server_uri}/districts"
         request.headers = {'User-Agent' => USER_AGENT}
 
         response = HTTPI.get(request)
@@ -21,7 +27,7 @@ module FeePay
         subdomain_or_sn = URI.escape(subdomain_or_sn.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/districts/#{subdomain_or_sn}"
+        request.url = "#{self.class.server_uri}/districts/#{subdomain_or_sn}"
         request.headers = {'User-Agent' => USER_AGENT}
 
         response = HTTPI.get(request)
@@ -38,7 +44,7 @@ module FeePay
         value = URI.escape(value.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/districts/by/#{key}/#{value}"
+        request.url = "#{self.class.server_uri}/districts/by/#{key}/#{value}"
         request.headers = {'User-Agent' => USER_AGENT}
 
         response = HTTPI.get(request)

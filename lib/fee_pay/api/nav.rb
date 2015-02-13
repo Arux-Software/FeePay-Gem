@@ -14,7 +14,7 @@ module FeePay
           login: {
             current_uuid: self.auth.current_user_uuid,
             client_id: self.auth.client_id,
-            redirect_uri: self.auth.redirect_uri
+            redirect_uri: self.auth.redirect_uri,
             callback: self.auth.js_callback
           }
         }

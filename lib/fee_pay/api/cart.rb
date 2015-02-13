@@ -1,7 +1,13 @@
 module FeePay
   module API
     class Cart
-      SERVER_URI = "https://cart.feepay.switchboard.io"
+      def self.server_uri
+        if FeePay::API.testmode
+          "https://cart.pre.feepay.switchboard.io"
+        else
+          "https://cart.feepay.switchboard.io"
+        end
+      end
       
       attr_accessor :auth, :access_token, :district_subdomain
       
@@ -19,7 +25,7 @@ module FeePay
         end
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -35,7 +41,7 @@ module FeePay
         path = %(/api/#{self.generate_cart_path}/status)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -51,7 +57,7 @@ module FeePay
         path = %(/api/#{self.generate_cart_path}/items)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -67,7 +73,7 @@ module FeePay
         path = %(/api/#{generate_cart_path}/items/#{item_identifier})
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -83,7 +89,7 @@ module FeePay
         path = %(/api/#{generate_cart_path}/items)
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.body = params
         request.headers = self.generate_headers
 
@@ -100,7 +106,7 @@ module FeePay
         path = %(/api/#{generate_cart_path}/items/#{item_identifier})
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.body = params
         request.headers = self.generate_headers
 
@@ -117,7 +123,7 @@ module FeePay
         path = %(/api/#{generate_cart_path}/items/#{item_identifier})
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}#{path}"
+        request.url = "#{self.class.server_uri}#{path}"
         request.headers = self.generate_headers
 
         response = HTTPI.delete(request)

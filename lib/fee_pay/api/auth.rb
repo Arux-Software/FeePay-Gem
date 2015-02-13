@@ -1,7 +1,13 @@
 module FeePay
   module API
     class Auth
-      SERVER_URI = "https://login.feepay.switchboard.io"
+      def self.server_uri
+        if FeePay::API.testmode
+          "https://login.pre.feepay.switchboard.io"
+        else
+          "https://login.feepay.switchboard.io"
+        end
+      end
       
       attr_accessor :client_id, :client_secret, :redirect_uri, :js_callback
       
@@ -15,7 +21,7 @@ module FeePay
       end
 
       def authorization_url
-        %(#{SERVER_URI}/authorize?client_id=#{self.client_id}&redirect_uri=#{self.redirect_uri})
+        %(#{self.class.server_uri}/authorize?client_id=#{self.client_id}&redirect_uri=#{self.redirect_uri})
       end
       
       def access_token(code)
@@ -28,7 +34,7 @@ module FeePay
         }
         
         request = HTTPI::Request.new
-        request.url = "#{SERVER_URI}/access_token"
+        request.url = "#{self.class.server_uri}/access_token"
         request.body = data
         request.headers = {'User-Agent' => USER_AGENT}
 
@@ -47,7 +53,7 @@ module FeePay
           login: {
             current_uuid: @current_uuid,
             client_id: self.client_id,
-            redirect_uri: self.redirect_uri
+            redirect_uri: self.redirect_uri,
             callback: self.js_callback
           }
         }
