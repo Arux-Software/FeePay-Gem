@@ -2,7 +2,7 @@ module FeePay
   module API
     class Nav
 
-      attr_accessor :auth, :district_subdomain, :current_user_uuid
+      attr_accessor :auth
 
       def initialize(options = {})
         self.auth = options[:auth]
