@@ -52,12 +52,12 @@ module FeePay
       def javascript
         options = {
           district: @district,
+          element: self.element,
           login: {
             current_uuid: @current_uuid,
             client_id: self.client_id,
             redirect_uri: self.redirect_uri,
             login_mechanism: self.login_mechanism,
-            element: self.element,
             callback: self.js_callback
           }
         }
