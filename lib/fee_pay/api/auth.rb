@@ -19,7 +19,7 @@ module FeePay
             }
         
             request = HTTPI::Request.new
-            request.url = "#{self.class.server_uri}/user"
+            request.url = "#{FeePay::API::Auth.server_uri}/user"
             request.query = data
             request.headers = {'User-Agent' => USER_AGENT}
 
