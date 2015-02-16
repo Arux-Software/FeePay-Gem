@@ -4,6 +4,10 @@ module FeePay
       class AccessToken
         attr_accessor :token
         
+        def initialize(at)
+          self.token = at
+        end
+        
         def user_data
           if @user_data.nil? and !@token.nil?
             data = {
