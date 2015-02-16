@@ -16,6 +16,7 @@ module FeePay
         self.client_secret = options[:client_secret]
         self.redirect_uri = options[:redirect_uri]
         self.js_callback = options[:js_callback]
+        self.login_mechanism = options[:login_mechanism] || 'redirect'
         self.district_subdomain = options[:district_subdomain]
         self.current_user_uuid = options[:current_user_uuid]
       end
@@ -54,6 +55,7 @@ module FeePay
             current_uuid: @current_uuid,
             client_id: self.client_id,
             redirect_uri: self.redirect_uri,
+            login_mechanism: self.login_mechanism,
             callback: self.js_callback
           }
         }
