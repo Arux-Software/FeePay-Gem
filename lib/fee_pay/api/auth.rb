@@ -1,6 +1,35 @@
 module FeePay
   module API
     class Auth
+      class AccessToken
+        attr_accessor :token
+        
+        def user_data
+          if @user_data.nil? and !@token.nil?
+            data = {
+              :oauth_token => self.token,
+              :redirect_uri => self.redirect_uri,
+              :client_secret => self.client_secret,
+              :client_id => self.client_id
+            }
+        
+            request = HTTPI::Request.new
+            request.url = "#{self.class.server_uri}/user"
+            request.query = data
+            request.headers = {'User-Agent' => USER_AGENT}
+
+            response = HTTPI.get(request)
+        
+            if !response.error?
+              @user_data = JSON.parse(response.body)
+            else
+              raise(API::Error.new(response.code, response.body))
+            end
+          end
+          @user_data
+        end
+      end
+      
       def self.server_uri
         if FeePay::API.testmode
           "https://login.pre.feepay.switchboard.io"
@@ -43,7 +72,7 @@ module FeePay
         response = HTTPI.post(request)
         
         if !response.error?
-          JSON.parse(response.body)['access_token']
+          return AccessToken.new(:token => JSON.parse(response.body)['access_token'])
         else
           raise(API::Error.new(response.code, response.body))
         end
