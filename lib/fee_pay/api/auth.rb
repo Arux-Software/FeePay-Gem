@@ -4,9 +4,9 @@ module FeePay
       class AccessToken
         attr_accessor :token, :auth
         
-        def initialize(at, auth)
-          self.token = at
-          self.auth = auth
+        def initialize(options = {})
+          self.token = options[:token]
+          self.auth = options[:auth]
         end
         
         def user_data
@@ -77,7 +77,7 @@ module FeePay
         response = HTTPI.post(request)
         
         if !response.error?
-          return AccessToken.new(:token => JSON.parse(response.body)['access_token'], self)
+          return AccessToken.new(:token => JSON.parse(response.body)['access_token'], :auth => self)
         else
           raise(API::Error.new(response.code, response.body))
         end
