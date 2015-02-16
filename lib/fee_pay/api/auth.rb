@@ -9,7 +9,7 @@ module FeePay
         end
       end
       
-      attr_accessor :client_id, :client_secret, :redirect_uri, :js_callback, :district_subdomain, :current_user_uuid
+      attr_accessor :client_id, :client_secret, :redirect_uri, :js_callback, :district_subdomain, :current_user_uuid, :login_mechanism
       
       def initialize(options = {})
         self.client_id = options[:client_id]
