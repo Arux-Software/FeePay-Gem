@@ -2,19 +2,20 @@ module FeePay
   module API
     class Auth
       class AccessToken
-        attr_accessor :token
+        attr_accessor :token, :auth
         
-        def initialize(at)
+        def initialize(at, auth)
           self.token = at
+          self.auth = auth
         end
         
         def user_data
           if @user_data.nil? and !@token.nil?
             data = {
               :oauth_token => self.token,
-              :redirect_uri => self.redirect_uri,
-              :client_secret => self.client_secret,
-              :client_id => self.client_id
+              :redirect_uri => self.auth.redirect_uri,
+              :client_secret => self.auth.client_secret,
+              :client_id => self.auth.client_id
             }
         
             request = HTTPI::Request.new
@@ -76,7 +77,7 @@ module FeePay
         response = HTTPI.post(request)
         
         if !response.error?
-          return AccessToken.new(:token => JSON.parse(response.body)['access_token'])
+          return AccessToken.new(:token => JSON.parse(response.body)['access_token'], self)
         else
           raise(API::Error.new(response.code, response.body))
         end
