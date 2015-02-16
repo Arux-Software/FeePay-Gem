@@ -9,7 +9,7 @@ module FeePay
         end
       end
       
-      attr_accessor :client_id, :client_secret, :redirect_uri, :js_callback, :district_subdomain, :current_user_uuid, :login_mechanism
+      attr_accessor :client_id, :client_secret, :redirect_uri, :js_callback, :district_subdomain, :current_user_uuid, :login_mechanism, :element
       
       def initialize(options = {})
         self.client_id = options[:client_id]
@@ -17,6 +17,7 @@ module FeePay
         self.redirect_uri = options[:redirect_uri]
         self.js_callback = options[:js_callback]
         self.login_mechanism = options[:login_mechanism] || 'redirect'
+        self.element = options[:element]
         self.district_subdomain = options[:district_subdomain]
         self.current_user_uuid = options[:current_user_uuid]
       end
@@ -56,6 +57,7 @@ module FeePay
             client_id: self.client_id,
             redirect_uri: self.redirect_uri,
             login_mechanism: self.login_mechanism,
+            element: self.element,
             callback: self.js_callback
           }
         }
