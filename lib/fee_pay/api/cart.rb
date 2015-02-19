@@ -134,7 +134,7 @@ module FeePay
         end
       end
       
-      private
+      protected
       
       def generate_cart_path
         %(#{URI.escape(self.auth.district_subdomain)}/#{URI.escape(self.access_token.token)})

@@ -81,7 +81,7 @@ module FeePay
       
       # TODO:: create mapping for relationships api endpoints
       
-      private
+      protected
       
       def generate_headers
         {'User-Agent' => USER_AGENT, 'Client-Secret' => self.auth.client_secret, 'Client-Id' => self.auth.client_id}
