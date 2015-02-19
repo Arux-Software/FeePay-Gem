@@ -89,6 +89,9 @@ module FeePay
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
+        if params.keys.first.to_s != 'item'
+          params = {:item => params}
+        end
         request.body = params
         request.headers = self.generate_headers
 
@@ -106,6 +109,9 @@ module FeePay
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
+        if params.keys.first.to_s != 'item'
+          params = {:item => params}
+        end
         request.body = params
         request.headers = self.generate_headers
 
