@@ -9,12 +9,11 @@ module FeePay
         end
       end
       
-      attr_accessor :auth, :access_token, :district_subdomain
+      attr_accessor :auth, :access_token
       
       def initialize(options = {})
-        self.auth = options[:auth]
         self.access_token = options[:access_token]
-        self.district_subdomain = options[:district_subdomain]
+        self.auth = self.access_token.auth
       end
       
       def get(uuid = nil)
@@ -138,7 +137,7 @@ module FeePay
       private
       
       def generate_cart_path
-        %(#{URI.escape(self.district_subdomain)}/#{URI.escape(self.access_token)})
+        %(#{URI.escape(self.auth.district_subdomain)}/#{URI.escape(self.access_token.token)})
       end
       
       def generate_headers
