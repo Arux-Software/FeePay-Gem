@@ -32,7 +32,7 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
@@ -48,7 +48,7 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
@@ -64,12 +64,12 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
       def get_item(item_identifier)
-        path = %(/api/#{generate_cart_path}/items/#{item_identifier})
+        path = %(/api/#{self.generate_cart_path}/items/#{item_identifier})
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -80,12 +80,12 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
       def add_item(params)
-        path = %(/api/#{generate_cart_path}/items)
+        path = %(/api/#{self.generate_cart_path}/items)
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -97,12 +97,12 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
       def update_item(item_identifier, params)
-        path = %(/api/#{generate_cart_path}/items/#{item_identifier})
+        path = %(/api/#{self.generate_cart_path}/items/#{URI.escape(item_identifier)})
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -114,12 +114,12 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
       def delete_item(item_identifier)
-        path = %(/api/#{generate_cart_path}/items/#{item_identifier})
+        path = %(/api/#{self.generate_cart_path}/items/#{URI.escape(item_identifier)})
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -130,7 +130,7 @@ module FeePay
         if !response.error?
           JSON.parse(response.body)
         else
-          raise(API::Error.new(response.code, JSON.parse(response.body)[:message]))
+          raise(API::Error.new(response.code, JSON.parse(response.body)["message"]))
         end
       end
       
