@@ -92,7 +92,7 @@ module FeePay
         if params.keys.first.to_s != 'item'
           params = {:item => params}
         end
-        request.body = params
+        request.body = params.to_json
         request.headers = self.generate_headers
 
         response = HTTPI.post(request)
@@ -112,7 +112,7 @@ module FeePay
         if params.keys.first.to_s != 'item'
           params = {:item => params}
         end
-        request.body = params
+        request.body = params.to_json
         request.headers = self.generate_headers
 
         response = HTTPI.put(request)
@@ -147,7 +147,7 @@ module FeePay
       end
       
       def generate_headers
-        {'User-Agent' => USER_AGENT, 'Client-Id' => self.auth.client_id}
+        {'User-Agent' => USER_AGENT, 'Client-Id' => self.auth.client_id, 'Content-Type' => 'application/json'}
       end
     end
   end
