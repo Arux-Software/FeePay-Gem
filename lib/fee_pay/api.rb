@@ -12,7 +12,10 @@ module FeePay
     end
     
     class Error < StandardError
+      attribute_accessor :http_status_code
       def initialize(code, message)
+        self.http_status_code = code.to_i
+        
         super "(#{code}) #{message}"
       end
     end
