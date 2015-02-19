@@ -14,6 +14,9 @@ module FeePay
       def initialize(options = {})
         self.access_token = options[:access_token]
         self.auth = self.access_token.auth
+        
+        raise API::InitializerError.new(:access_token, "can't be blank") if self.access_token.empty?
+        raise API::InitializerError.new(:access_token, "must be of class type FeePay::API::Auth::AccessToke") if !self.access_token.is_a?(FeePay::API::Auth::AccessToken)
       end
       
       def get(uuid = nil)

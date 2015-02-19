@@ -7,6 +7,10 @@ module FeePay
         def initialize(options = {})
           self.token = options[:token]
           self.auth = options[:auth]
+          
+          raise API::InitializerError.new(:token, "can't be blank") if self.token.to_s.empty?
+          raise API::InitializerError.new(:auth, "can't be blank") if self.auth.nil?
+          raise API::InitializerError.new(:auth, "must be of class type FeePay::API::Auth") if !self.auth.is_a?(FeePay::API::Auth)
         end
         
         def user_data
@@ -54,6 +58,11 @@ module FeePay
         self.element = options[:element]
         self.district_subdomain = options[:district_subdomain]
         self.current_user_uuid = options[:current_user_uuid]
+
+        raise API::InitializerError.new(:client_id, "can't be blank") if self.client_id.to_s.empty?
+        raise API::InitializerError.new(:client_secret, "can't be blank") if self.client_secret.to_s.empty?
+        raise API::InitializerError.new(:redirect_uri, "can't be blank") if self.redirect_uri.to_s.empty?
+        raise API::InitializerError.new(:district_subdomain, "can't be blank") if self.district_subdomain.to_s.empty?
       end
 
       def authorization_url

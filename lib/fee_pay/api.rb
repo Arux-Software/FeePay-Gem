@@ -19,5 +19,11 @@ module FeePay
         super "(#{code}) #{message}"
       end
     end
+    
+    class InitializerError < StandardError
+      def initialize(method, message)        
+        super "#{method} #{message}"
+      end
+    end
   end
 end
