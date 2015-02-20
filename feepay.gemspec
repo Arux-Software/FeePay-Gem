@@ -3,11 +3,11 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name           = "fee_pay"
+  spec.name           = "feepay"
   spec.version        = "0.0.3"
   spec.authors        = ["Arux Software"]
   spec.email          = ["sheuer@aruxsoftware.com"]
-  spec.summary        = "Ruby gem for interacting with the FeePay API."
+  spec.summary        = "Ruby gem for interacting with the FeePay APIs."
   spec.homepage       = ""
   spec.license        = "MIT"
 
