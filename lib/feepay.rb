@@ -15,3 +15,7 @@ module FeePay
   VERSION = "0.1.0"
   USER_AGENT = "FeePay GEM #{VERSION}"
 end
+
+if ENV['FEEPAY_GEM_TEST_MODE'].to_s == "true"
+  FeePay::API.testmode = true
+end
