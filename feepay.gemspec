@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name           = "feepay"
-  spec.version        = "0.0.3"
+  spec.version        = "0.1.0"
   spec.authors        = ["Arux Software"]
   spec.email          = ["sheuer@aruxsoftware.com"]
   spec.summary        = "Ruby gem for interacting with the FeePay APIs."
