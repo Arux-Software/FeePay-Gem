@@ -66,6 +66,23 @@ module FeePay
         end
       end
       
+      def merge(uuid1, uuid2)
+        uuid1 = URI.escape(uuid1)
+        uuid2 = URI.escape(uuid2)
+        
+        request = HTTPI::Request.new
+        request.url = "#{self.class.server_uri}/api/users/merge/#{uuid1}/#{uuid2}"
+        request.headers = self.generate_headers
+        
+        response = HTTPI.put(request)
+        
+        if !response.error?
+          JSON.parse(response.body)
+        else
+          raise(API::Error.new(response.code, response.body))
+        end
+      end      
+      
       def delete(uuid)
         uuid = URI.escape(uuid.to_s)
         
