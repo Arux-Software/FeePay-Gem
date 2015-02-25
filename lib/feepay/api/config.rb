@@ -8,11 +8,20 @@ module FeePay
           "https://config.feepay.switchboard.io"
         end
       end
-          
+      
+      attr_accessor :auth
+      
+      def initialize(options = {})
+        self.auth = options[:auth]
+        
+        raise API::InitializerError.new(:auth, "can't be blank") if self.auth.nil?
+        raise API::InitializerError.new(:auth, "must be of class type FeePay::API::Auth") if !self.auth.is_a?(FeePay::API::Auth)
+      end
+      
       def districts
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/districts"
-        request.headers = {'User-Agent' => USER_AGENT}
+        request.url = "#{self.class.server_uri}/api/v1/districts"
+        request.headers = self.generate_headers
 
         response = HTTPI.get(request)
         
@@ -27,8 +36,8 @@ module FeePay
         subdomain_or_sn = URI.escape(subdomain_or_sn.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/districts/#{subdomain_or_sn}"
-        request.headers = {'User-Agent' => USER_AGENT}
+        request.url = "#{self.class.server_uri}/api/v1/districts/#{subdomain_or_sn}"
+        request.headers = self.generate_headers
 
         response = HTTPI.get(request)
         
@@ -44,8 +53,8 @@ module FeePay
         value = URI.escape(value.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/districts/by/#{key}/#{value}"
-        request.headers = {'User-Agent' => USER_AGENT}
+        request.url = "#{self.class.server_uri}/api/v1/districts/by/#{key}/#{value}"
+        request.headers = self.generate_headers
 
         response = HTTPI.get(request)
         
@@ -54,6 +63,12 @@ module FeePay
         else
           raise(API::Error.new(response.code, response.body))
         end        
+      end
+      
+      protected
+      
+      def generate_headers
+        {'User-Agent' => USER_AGENT, 'Client-Secret' => self.auth.client_secret, 'Client-Id' => self.auth.client_id}
       end
     
     end
