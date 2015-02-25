@@ -21,9 +21,9 @@ module FeePay
       
       def get(uuid = nil)
         if uuid
-          path = %(/api/#{URI.escape(uuid)})
+          path = %(/api/v1/#{URI.escape(uuid)})
         else
-          path = %(/api/#{self.generate_cart_path})
+          path = %(/api/v1/#{self.generate_cart_path})
         end
         
         request = HTTPI::Request.new
@@ -40,7 +40,7 @@ module FeePay
       end
       
       def get_status
-        path = %(/api/#{self.generate_cart_path}/status)
+        path = %(/api/v1/#{self.generate_cart_path}/status)
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -56,7 +56,7 @@ module FeePay
       end
       
       def get_items
-        path = %(/api/#{self.generate_cart_path}/items)
+        path = %(/api/v1/#{self.generate_cart_path}/items)
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -72,7 +72,7 @@ module FeePay
       end
       
       def get_item(item_identifier)
-        path = %(/api/#{self.generate_cart_path}/items/#{item_identifier})
+        path = %(/api/v1/#{self.generate_cart_path}/items/#{item_identifier})
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -88,7 +88,7 @@ module FeePay
       end
       
       def add_item(params)
-        path = %(/api/#{self.generate_cart_path}/items)
+        path = %(/api/v1/#{self.generate_cart_path}/items)
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -108,7 +108,7 @@ module FeePay
       end
       
       def update_item(item_identifier, params)
-        path = %(/api/#{self.generate_cart_path}/items/#{URI.escape(item_identifier)})
+        path = %(/api/v1/#{self.generate_cart_path}/items/#{URI.escape(item_identifier)})
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"
@@ -128,7 +128,7 @@ module FeePay
       end
       
       def delete_item(item_identifier)
-        path = %(/api/#{self.generate_cart_path}/items/#{URI.escape(item_identifier)})
+        path = %(/api/v1/#{self.generate_cart_path}/items/#{URI.escape(item_identifier)})
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}#{path}"

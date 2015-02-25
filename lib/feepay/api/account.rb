@@ -22,7 +22,7 @@ module FeePay
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/api/users/#{uuid}"
+        request.url = "#{self.class.server_uri}/api/v1/users/#{uuid}"
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -36,7 +36,7 @@ module FeePay
       
       def create(params)
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/api/users/"
+        request.url = "#{self.class.server_uri}/api/v1/users/"
         request.body = params
         request.headers = self.generate_headers
 
@@ -53,7 +53,7 @@ module FeePay
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/api/users/#{uuid}"
+        request.url = "#{self.class.server_uri}/api/v1/users/#{uuid}"
         request.body = params
         request.headers = self.generate_headers
 
@@ -71,7 +71,7 @@ module FeePay
         uuid2 = URI.escape(uuid2)
         
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/api/users/merge/#{uuid1}/#{uuid2}"
+        request.url = "#{self.class.server_uri}/api/v1/users/merge/#{uuid1}/#{uuid2}"
         request.headers = self.generate_headers
         
         response = HTTPI.put(request)
@@ -87,7 +87,7 @@ module FeePay
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
-        request.url = "#{self.class.server_uri}/api/users/#{uuid}"
+        request.url = "#{self.class.server_uri}/api/v1/users/#{uuid}"
         request.headers = self.generate_headers
         
         response = HTTPI.delete(request)
