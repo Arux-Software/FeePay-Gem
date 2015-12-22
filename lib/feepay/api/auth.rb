@@ -94,10 +94,10 @@ module FeePay
       
       def javascript
         options = {
-          district: @district,
+          district: self.district_subdomain,
           element: self.element,
           login: {
-            current_uuid: @current_uuid,
+            current_uuid: self.current_user_uuid,
             client_id: self.client_id,
             redirect_uri: self.redirect_uri,
             login_mechanism: self.login_mechanism,
