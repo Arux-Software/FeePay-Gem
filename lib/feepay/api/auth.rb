@@ -65,7 +65,7 @@ module FeePay
       end
 
       def authorization_url
-        %(#{self.class.server_uri}/authorize?client_id=#{self.client_id}&redirect_uri=#{self.redirect_uri})
+        %(#{self.class.server_uri}/authorize?client_id=#{self.client_id}&redirect_uri=#{self.redirect_uri}&district=#{self.district_subdomain})
       end
       
       def access_token(code)
