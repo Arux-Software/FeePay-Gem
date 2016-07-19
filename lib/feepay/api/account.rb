@@ -18,6 +18,20 @@ module FeePay
         raise API::InitializerError.new(:auth, "must be of class type FeePay::API::Auth") if !self.auth.is_a?(FeePay::API::Auth)
       end
       
+      def list(options = {})
+        request = HTTPI::Request.new
+        request.url = "#{self.class.server_uri}/api/v1/users"
+        request.headers = self.generate_headers
+
+        response = HTTPI.get(request)
+        
+        if !response.error?
+          JSON.parse(response.body)
+        else
+          raise(API::Error.new(response.code, response.body))
+        end
+      end
+      
       def get(uuid)
         uuid = URI.escape(uuid.to_s)
         
