@@ -2,10 +2,12 @@ module FeePay
   module API
     class Account
       def self.server_uri
-        if FeePay::API.testmode
-          "https://accounts.pre.feepay.switchboard.io"
-        else
+        if FeePay::API.standardmode?
           "https://accounts.feepay.switchboard.io"
+        elsif FeePay::API.testmode?
+          "https://accounts.pre.feepay.switchboard.io"
+        elsif FeePay::API.devmode?
+          "http://accounts.localfeepay.switchboard.io:5678"
         end
       end
 

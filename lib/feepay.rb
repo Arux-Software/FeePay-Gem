@@ -20,3 +20,7 @@ end
 if ENV['FEEPAY_GEM_TEST_MODE'].to_s == "true"
   FeePay::API.testmode = true
 end
+
+if ENV['FEEPAY_GEM_DEV_MODE'].to_s == "true"
+  FeePay::API.devmode = true
+end

@@ -40,13 +40,15 @@ module FeePay
       end
       
       def self.server_uri
-        if FeePay::API.testmode
-          "https://login.pre.feepay.switchboard.io"
-        else
+        if FeePay::API.standardmode?
           "https://login.feepay.switchboard.io"
+        elsif FeePay::API.testmode?
+          "https://login.pre.feepay.switchboard.io"
+        elsif FeePay::API.devmode?
+          "http://login.localfeepay.switchboard.io:5678"
         end
       end
-      
+            
       attr_accessor :client_id, :client_secret, :redirect_uri, :js_callback, :district_subdomain, :current_user_uuid, :login_mechanism, :element
       
       def initialize(options = {})
@@ -61,7 +63,7 @@ module FeePay
 
         raise API::InitializerError.new(:client_id, "can't be blank") if self.client_id.to_s.empty?
         raise API::InitializerError.new(:client_secret, "can't be blank") if self.client_secret.to_s.empty?
-        raise API::InitializerError.new(:redirect_uri, "can't be blank") if self.redirect_uri.to_s.empty?
+        # raise API::InitializerError.new(:redirect_uri, "can't be blank") if self.redirect_uri.to_s.empty?
       end
 
       def authorization_url

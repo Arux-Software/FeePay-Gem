@@ -2,10 +2,12 @@ module FeePay
   module API
     class Cart
       def self.server_uri
-        if FeePay::API.testmode
-          "https://cart.pre.feepay.switchboard.io"
-        else
+        if FeePay::API.standardmode?
           "https://cart.feepay.switchboard.io"
+        elsif FeePay::API.testmode?
+          "https://cart.pre.feepay.switchboard.io"
+        elsif FeePay::API.devmode?
+          "http://cart.localfeepay.switchboard.io:3456"
         end
       end
 

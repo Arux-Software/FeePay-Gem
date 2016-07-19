@@ -2,10 +2,12 @@ module FeePay
   module API
     class Config
       def self.server_uri
-        if FeePay::API.testmode
-          "https://config.pre.feepay.switchboard.io"
-        else
+        if FeePay::API.standardmode?
           "https://config.feepay.switchboard.io"
+        elsif FeePay::API.testmode?
+          "https://config.pre.feepay.switchboard.io"
+        elsif FeePay::API.devmode?
+          "http://config.localfeepay.switchboard.io:6789"
         end
       end
 

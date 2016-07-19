@@ -1,13 +1,19 @@
 module FeePay
   module API
     class << self
-      @@testmode = false
-      def testmode
-        @@testmode
-      end
-    
-      def testmode=(t)
-        @@testmode = t
+      @@mode = :standard
+      [:test, :dev, :standard].each do |m|
+        define_method("#{m}mode?") do
+          @@mode == m
+        end
+        
+        define_method("#{m}mode") do
+          @@mode == m
+        end
+        
+        define_method("#{m}mode=") do |b|
+          @@mode = b ? m : :standard
+        end
       end
     end
     
