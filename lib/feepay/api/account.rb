@@ -58,7 +58,9 @@ module FeePay
 
         response = HTTPI.post(request)
         
-        if !response.error?
+        if rseponse.code == 201
+          true
+        elsif !response.error?
           JSON.parse(response.body)
         else
           raise(API::Error.new(response.code, response.body))
@@ -75,7 +77,9 @@ module FeePay
 
         response = HTTPI.put(request)
         
-        if !response.error?
+        if response.code == 204
+          true
+        elsif !response.error?
           JSON.parse(response.body)
         else
           raise(API::Error.new(response.code, response.body))
