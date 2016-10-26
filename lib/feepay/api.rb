@@ -31,5 +31,12 @@ module FeePay
         super "#{method} #{message}"
       end
     end
+
+    class RequirementError < StandardError
+      def initialize(method, message)        
+        super "#{method} #{message}"
+      end
+    end
+
   end
 end

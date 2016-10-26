@@ -13,33 +13,10 @@ module FeePay
           raise API::InitializerError.new(:auth, "must be of class type FeePay::API::Auth") if !self.auth.is_a?(FeePay::API::Auth)
         end
         
-        def user_data(additional_params = {})
+        def user_data(params = {})
           if @user_data.nil? and !@token.nil?
-            data = additional_params.merge({
-              :oauth_token => self.token,
-              :redirect_uri => self.auth.redirect_uri,
-              :client_secret => self.auth.client_secret,
-              :client_id => self.auth.client_id
-            })
-        
-            request = HTTPI::Request.new
-            request.url = "#{FeePay::API::Auth.server_uri}/user/uuid"
-            request.query = data
-            request.headers = {'User-Agent' => USER_AGENT}
-
-            response = HTTPI.get(request)
-        
-            if !response.error?
-              id = response.body
-              
-              acc = FeePay::API::Account.new(:access_token => self)
-              data = acc.get(id, additional_params)
-              if data["user"]
-                @user_data = data["user"]
-              end
-            else
-              raise(API::Error.new(response.code, response.body))
-            end
+            acc = FeePay::API::Account.new(:access_token => self)
+            @user_data = acc.owner(params)["user"]
           end
           @user_data
         end

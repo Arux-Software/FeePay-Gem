@@ -122,6 +122,23 @@ module FeePay
         end
       end
       
+      def owner(params = {})
+        raise API::RequirementError.new(:access_token, "can't be blank") if self.access_token.nil?
+
+        request = HTTPI::Request.new
+        request.url = "#{self.class.server_uri}/api/v1/users/owner"
+        request.query = params.to_query
+        request.headers = self.generate_headers
+
+        response = HTTPI.get(request)
+        
+        if !response.error?
+          JSON.parse(response.body)
+        else
+          raise(API::Error.new(response.code, response.body))
+        end
+      end
+      
       # TODO:: create mapping for relationships api endpoints
       
       protected
