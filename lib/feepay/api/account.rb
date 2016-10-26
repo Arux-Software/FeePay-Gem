@@ -11,13 +11,15 @@ module FeePay
         end
       end
 
-      attr_accessor :auth
+      attr_accessor :auth, :access_token
       
       def initialize(options = {})
-        self.auth = options[:auth]
+        self.auth         = options[:auth]
+        self.access_token = options[:access_token]
         
-        raise API::InitializerError.new(:auth, "can't be blank") if self.auth.nil?
-        raise API::InitializerError.new(:auth, "must be of class type FeePay::API::Auth") if !self.auth.is_a?(FeePay::API::Auth)
+        raise API::InitializerError.new(:auth_or_access_token, "can't be blank") if self.auth.nil? and self.access_token.nil?
+        raise API::InitializerError.new(:auth, "must be of class type FeePay::API::Auth") if self.auth and !self.auth.is_a?(FeePay::API::Auth)
+        raise API::InitializerError.new(:access_token, "must be of class type FeePay::API::Auth::AccessToken") if self.access_token and !self.access_token.is_a?(FeePay::API::Auth::AccessToken)
       end
       
       def list(options = {})
@@ -125,7 +127,11 @@ module FeePay
       protected
       
       def generate_headers
-        {'User-Agent' => USER_AGENT, 'Client-Secret' => self.auth.client_secret, 'Client-Id' => self.auth.client_id}
+        if self.access_token
+          {'User-Agent' => USER_AGENT, 'Authorization' => self.access_token.token}
+        else
+          {'User-Agent' => USER_AGENT, 'Client-Secret' => self.auth.client_secret, 'Client-Id' => self.auth.client_id}
+        end
       end
 
     end
