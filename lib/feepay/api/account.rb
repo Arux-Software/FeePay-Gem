@@ -34,11 +34,12 @@ module FeePay
         end
       end
       
-      def get(uuid)
+      def get(uuid, params = {})
         uuid = URI.escape(uuid.to_s)
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}/api/v1/users/#{uuid}"
+        request.query = params.to_query
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
