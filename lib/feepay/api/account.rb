@@ -41,7 +41,7 @@ module FeePay
         
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}/api/v1/users/#{uuid}"
-        request.query = params.to_query
+        request.query = URI.encode_www_form(params)
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
@@ -127,7 +127,7 @@ module FeePay
 
         request = HTTPI::Request.new
         request.url = "#{self.class.server_uri}/api/v1/users/owner"
-        request.query = params.to_query
+        request.query = URI.encode_www_form(params)
         request.headers = self.generate_headers
 
         response = HTTPI.get(request)
